@@ -1,0 +1,75 @@
+@extends('layouts.main')
+@section('main')
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">List {{$title}}</h3>
+            <div class="card-tools">
+                <div class="input-group input-group-sm">
+                  
+                    <a href="{{route('user.create')}}" class="btn btn-primary">Tambah <i class="fas fa-plus"></i></a>
+                
+                </div>
+              </div>
+        </div>
+        <div class="card-body">
+               
+
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
+
+           
+
+            <table class="table table-bordered" id="tbluser">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Avatar</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i=1;?>
+                    @foreach ($user as $rowuser )
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$rowuser->name}}</td>
+                            <td>{{$rowuser->email}}</td>
+                            <td>{{$rowuser->avatar}}</td>
+                            <td style="text-align: center;">
+                                
+                                
+                                <a href="{{route('user.show',$rowuser->id)}}" title="show" class="mr-1"><span class="fa-regular fa-eye"></span></a>
+                                <a href="{{route('user.edit',$rowuser->id)}}" title="update" class="mr-1"><span class="fa-regular fa-pen-to-square"></span></a>
+                                <a onclick="deletef('{{route('user.destroy',$rowuser->id)}}')" href="#" class="mr-1"><span class="fa-solid fa-trash-can"></span></a></td>
+                        </tr>
+                        <?php $i++;?>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@endsection
+@section('page-js-script')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tbluser').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            });
+    });
+</script>
+@stop

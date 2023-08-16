@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryBlogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\CategoryBlog;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +30,11 @@ Route::resources([
     'user' => UserController::class,
 ]);
 Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('user');
+
+Route::resources([
+    'CategoryBlog' => CategoryBlogController::class,
+]);
+Route::get('/CategoryBlog', [App\Http\Controllers\CategoryBlogController::class, 'index'])->name('CategoryBlog');
 
 
 Route::middleware('auth')->group(function () {

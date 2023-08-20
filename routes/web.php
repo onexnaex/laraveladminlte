@@ -36,6 +36,11 @@ Route::resources([
 ]);
 Route::get('/CategoryBlog', [App\Http\Controllers\CategoryBlogController::class, 'index'])->name('CategoryBlog');
 
+Route::resources([
+    'ArticleBlog' => ArticleBlogController::class,
+]);
+Route::get('/ArticleBlog', [App\Http\Controllers\ArticleBlogController::class, 'index'])->name('ArticleBlog');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

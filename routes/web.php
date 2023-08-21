@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\ArticleblogController;
 use App\Http\Controllers\CategoryBlogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -37,9 +37,9 @@ Route::resources([
 Route::get('/CategoryBlog', [App\Http\Controllers\CategoryBlogController::class, 'index'])->name('CategoryBlog');
 
 Route::resources([
-    'ArticleBlog' => ArticleBlogController::class,
+    'ArticleBlog' => ArticleblogController::class,
 ]);
-Route::get('/ArticleBlog', [App\Http\Controllers\ArticleBlogController::class, 'index'])->name('ArticleBlog');
+Route::get('/ArticleBlog', [App\Http\Controllers\ArticleblogController::class, 'index'])->name('ArticleBlog');
 
 
 Route::middleware('auth')->group(function () {

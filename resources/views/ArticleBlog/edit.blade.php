@@ -5,8 +5,8 @@
         <div class="card-header">
             <h3 class="card-title">Add {{$title}}</h3>
         </div>
-        @foreach ($categoryBlog as $rowcategoryblog )
-        <form action="{{route('CategoryBlog.update',$rowcategoryblog->id)}}" role="form" method="post">
+        @foreach ($articleBlog as $rowarticleBlog )
+        <form action="{{route('ArticleBlog.update',$rowarticleBlog->id)}}" role="form" method="post">
             @csrf <!-- {{ csrf_field() }} -->
             @method('PUT')
             <div class="card-body">
@@ -24,8 +24,31 @@
                 </div>
                 @endif
                 <div class="form-group">
+                    <label for="name">Title</label>
+                    <input type="text" name="title" id="title" class="form-control" placeholder="input your title" value="{{old('title',$rowarticleBlog->title)}}">    
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Description</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10">{{old('description',$rowarticleBlog->description)}}</textarea>   
+                </div>
+
+                
+                <div class="form-group">
                     <label for="name">Category</label>
-                    <input type="text" name="category_name" id="category_name" class="form-control" placeholder="input your Category" value="{{old('category_name',$rowcategoryblog->category_name)}}">    
+                    <select name="fk_category" id="fk_category"  class="form-control" value="{{old('fk_category',$rowarticleBlog->fk_category)}}">
+                        @foreach ($category as $rowcategory )
+                            <option value="{{$rowcategory->id}}">{{$rowcategory->category_name}}</option>
+                        @endforeach
+                    </select>   
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Cover</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail" value="{{old('thumbnail',$rowarticleBlog->thumbnail)}}">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
                 </div>
             </div>
             <div class="card-footer">

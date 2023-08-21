@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">Add {{$title}}</h3>
         </div>
-        <form action="{{route('CategoryBlog.store')}}" role="form" method="post">
+        <form action="{{route('ArticleBlog.store')}}" role="form" method="post">
             @csrf <!-- {{ csrf_field() }} -->
             <div class="card-body">
                 @if ($errors->any())
@@ -22,8 +22,31 @@
                 </div>
                 @endif
                 <div class="form-group">
+                    <label for="name">Title</label>
+                    <input type="text" name="title" id="title" class="form-control" placeholder="input your title" value="{{old('title')}}">    
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Description</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10">{{old('description')}}</textarea>   
+                </div>
+
+                
+                <div class="form-group">
                     <label for="name">Category</label>
-                    <input type="text" name="category_name" id="category_name" class="form-control" placeholder="input your Category" value="{{old('category_name')}}">    
+                    <select name="fk_category" id="fk_category"  class="form-control" value="{{old('fk_category')}}">
+                        @foreach ($category as $rowcategory )
+                            <option value="{{$rowcategory->id}}">{{$rowcategory->category_name}}</option>
+                        @endforeach
+                    </select>   
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Cover</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail" value="{{old('thumbnail')}}">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
                 </div>
             </div>
             <div class="card-footer">

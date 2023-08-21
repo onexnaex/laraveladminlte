@@ -31,14 +31,19 @@ class ArticleBlogDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
     
-        $model = CategoryBlog::class;
+       
 
         return (new EloquentDataTable($query))
         ->addColumn('action', ' <a href="{{route("ArticleBlog.show",$id)}}" title="show" class="mr-1"><span class="fa-regular fa-eye"></span></a>
         <a href="{{route("ArticleBlog.edit",$id)}}" title="update" class="mr-1"><span class="fa-regular fa-pen-to-square"></span></a>
         <a onclick="deletef(\'{{route("ArticleBlog.destroy",$id)}}\',{{$id}})" href="#" class="mr-1"><span class="fa-solid fa-trash-can"></span></a>')
-        ->addColumn('category','$model::where("id",{{$fk_category}})->first()->value("category_name")')
-        ->setRowId('id');
+       // ->addColumn('category',$model::where("id","{{$fk_category}}")->first()->value("category_name"))
+        
+       ->addColumn('category',function(ArticleBlog $ArticleBlog){
+            $model = CategoryBlog::class;
+            return $model::where("id",$ArticleBlog->fk_category)->first()->value("category_name");
+       })
+       ->setRowId('id');
     }
 
     /**
@@ -80,14 +85,12 @@ class ArticleBlogDataTable extends DataTable
            
             Column::make('id'),
             Column::make('title'),
-            Column::make('description'),
-            Column::make('fk_category'),
             Column::computed('category'),
             Column::make('thumbnail'),
             Column::computed('action')
             ->exportable(false)
             ->printable(false)
-            ->width(60)
+            ->width(100)
             ->addClass('text-center'),
            
         ];

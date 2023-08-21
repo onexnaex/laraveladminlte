@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\articleblog;
+use App\Models\CategoryBlog;
 use Illuminate\Http\Request;
 use App\DataTables\ArticleBlogDataTable;
 use DataTables;
@@ -29,6 +30,7 @@ class ArticleblogController extends Controller
      */
     public function create()
     {
+        $this->data['category'] = CategoryBlog::all();
         return view('articleBlog.create',$this->data);
     }
 
@@ -64,7 +66,8 @@ class ArticleblogController extends Controller
      */
     public function edit($id)
     {
-        $categoryBlog = articleblog::find($id);
+        $articleblog = articleblog::find($id);
+        $this->data['category'] = CategoryBlog::all();
         $this->data['articleBlog'] = compact('articleblog');
         return view('ArticleBlog.edit',$this->data);
     }
@@ -75,10 +78,10 @@ class ArticleblogController extends Controller
     public function update(Request $request, articleblog $articleblog)
     {
         $request->validate([
-            'title'=>'required|unique:article_blog',
+            'title'=>'required',
             'description'=>'required',
             'fk_category'=>'required',
-            'thumbnail'=>'required',
+            //'thumbnail'=>'required',
         ]);
         $articleblog->update($request->all());
         return redirect()->route('ArticleBlog')->with('success','Article Blog Update Successfully');
